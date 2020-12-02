@@ -1,0 +1,1 @@
+oc new-app --as-deployment-config --name hola https://github.com/lenzch/DO288-apps#container-build --context-dir container-build
