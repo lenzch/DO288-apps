@@ -1,0 +1,2 @@
+oc new-app https://github.com/lenzch/DO288-apps#design-container --context-dir=hello-java --as-deployment-config --name elvis --strategy=docker
+
