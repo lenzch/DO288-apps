@@ -1,2 +1,7 @@
 oc new-app https://github.com/lenzch/DO288-apps#design-container --context-dir=hello-java --as-deployment-config --name elvis --strategy=docker
 
+oc expose service elvis 
+
+oc create cm appconfig --from-literal APP_MSG="Elvis lives"
+
+oc set env dc/elvis --from cm/appconfig
