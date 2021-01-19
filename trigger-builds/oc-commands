@@ -1,0 +1,9 @@
+oc new-project ${RHT_OCP4_DEV_USER}-trigger-builds
+
+podman login -u lenzch quay.io
+
+skopeo copy docker-archive:php-70-rhel7-original.tar.gz docker://quay.io/lenzch/php-70-rhel7:latest
+
+oc import-image php --from quay.io/lenzch/php-70-rhel7
+
+oc new-app --as-deployment-config --name trigger php~https://github.com/lenzch/DO288-apps#trigger-builds --context-dir trigger-builds
