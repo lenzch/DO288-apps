@@ -1,0 +1,20 @@
+s2i create s2i-do288-httpd s2i-do288-httpd
+cd
+cd s2i-sample-app/
+sudo podman build --format docker -t s2i-sample-app .
+sudo podman build -t s2i-sample-app2 .
+sudo podman images
+sudo podman run --name test -u 1234 -p 8080:8080 -d s2i-sample-app 
+sudo podman ps
+curl localhost:8080
+sudo podman stop test
+oc create secret docker-registry quayio --docker-server=quay.io --docker-username=lenzch --docker-password=XXXX
+oc secrets link builder quayio
+oc import-image s2i-do288-httpd --from quay.io/lenzch/s2i-do288-httpd --confirm
+oc describe is
+oc new-app --as-deployment-config --name hello-s2i s2i-do288-httpd~https://github.com/lenzch/DO288-apps --context-dir html-helloworld
+oc logs -f bc/hello-s2i
+oc get po
+oc expose service hello-s2i 
+oc get routes.route.openshift.io 
+curl hello-s2i-christian-lenz-de-ibm-com-apache-s2i.apps.na45.prod.nextcle.com
